@@ -1,0 +1,40 @@
+{% extends 'links/template.html' %}
+
+{% block body %}
+
+<div class="container main">
+  <div class="mt-5">
+
+    <div class="text-center py-3">
+        <h1 class="title">URL Shorter <span class="lightText"> Application </span></h1>
+
+        {% if not new_link %}
+            <img class="mainImage" src="https://salesquared.io/wp-content/uploads/2020/10/URL-Shortner.svg" alt="main">
+        {% endif %}
+
+        {% if new_link %}
+          <div class="mx-auto text-center mt-5">
+            <h2 class="subtitle">Your new short URL</h2>
+            <p> <a href="{{new_link}}"> {{new_link}} </a> </p>
+            <h2 class="subtitleLight">Origin URL</h2>
+            <p> <a href="{{long_link}}"> {{long_link}} </a></p>
+          </div>
+        {% endif %}
+
+    </div>
+
+    <div class="px-3 py-4">
+      <form action="" method="POST">
+        {% csrf_token %}
+        <div class="formWrapper">
+          <div>{{form.long_link}}</div>
+          <button class="button btn-lg w-100" type="submit">
+            Create Link
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+{% endblock body %}
