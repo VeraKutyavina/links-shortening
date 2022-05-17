@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from .models import Link
+from django.urls import reverse
 from .forms import LinkShorterForm
+from .models import Link
 
 
 def index(request):
-    return HttpResponse("Hello, world from links!")
+    return HttpResponseRedirect(reverse('create'))
 
 
 def create(request):
