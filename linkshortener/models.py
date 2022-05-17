@@ -9,7 +9,7 @@ from .utils import generate_short_url
 
 
 class Link(models.Model):
-    long_link = models.CharField(max_length=50)
+    long_link = models.CharField(max_length=100)
     short_link = models.CharField(max_length=50, unique=True)
     followed_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
