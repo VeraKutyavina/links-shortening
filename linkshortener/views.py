@@ -37,8 +37,15 @@ def create(request):
 
 def redirect(request, short_link):
     redirect_link = get_object_or_404(Link, short_link=short_link)
-
     redirect_link.followed_count += 1
     redirect_link.save()
 
     return HttpResponseRedirect(redirect_link.long_link)
+
+
+def all_links(request):
+    links = Link.objects.order_by("-followed_count")
+    template = loader.get_template('links/allLinks.html')
+    content = template.render({"links": links, "absolute_url": request.build_absolute_uri('/')}, request)
+
+    return HttpResponse(content=content)

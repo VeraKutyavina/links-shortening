@@ -1,0 +1,32 @@
+{% extends 'links/template.html' %}
+
+{% block body %}
+
+    <div class="container main">
+        <div class="mt-5">
+            <div class="text-center py-3">
+                <h1 class="title">URL Shorter <span class="lightText"> Application </span></h1>
+                <h2 class="allLinksTitle">All links</h2>
+
+                {% if links %}
+                    <ul>
+                    {% for link in links %}
+                        <li>
+                            <div class="linkItem">
+                                <div>
+                                    <a class="linkName" href="{{ link.short_link }}"> {{ absolute_url }}{{ link.short_link }} </a>
+                                    <div class="lightText"> count: {{ link.followed_count }} </div>
+                                </div>
+                                <button class="removeButton"> Remove </button>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
