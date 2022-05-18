@@ -17,7 +17,10 @@
                                     <a class="linkName" href="{{ link.short_link }}"> {{ absolute_url }}{{ link.short_link }} </a>
                                     <div class="lightText"> count: {{ link.followed_count }} </div>
                                 </div>
-                                <button class="removeButton"> Remove </button>
+                                <form action="{% url 'remove' link.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="removeButton"> Remove </button>
+                                </form>
                             </div>
                         </li>
                     {% endfor %}

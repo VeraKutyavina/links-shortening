@@ -49,3 +49,10 @@ def all_links(request):
     content = template.render({"links": links, "absolute_url": request.build_absolute_uri('/')}, request)
 
     return HttpResponse(content=content)
+
+
+def remove(request, link_id):
+    removed_link = Link.objects.get(pk=link_id)
+    removed_link.delete()
+
+    return HttpResponseRedirect(reverse('allLinks'))
