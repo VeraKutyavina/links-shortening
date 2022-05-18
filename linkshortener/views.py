@@ -6,23 +6,31 @@ from .forms import LinkShorterForm
 from .models import Link
 
 
+# view for redirect on create page
 def index(request):
     return HttpResponseRedirect(reverse('create'))
 
 
+# view for create link
 def create(request):
     template = loader.get_template('links/home.html')
     context = {'form': LinkShorterForm()}
 
+    # return template with form on GET query
     if request.method == 'GET':
         return HttpResponse(template.render(context, request))
 
+    # return info about new url on POST query
     elif request.method == 'POST':
 
         used_form = LinkShorterForm(request.POST)
 
+        print(request.POST)
+
         if used_form.is_valid():
             user_link = request.POST['long_link']
+
+            print(user_link)
 
             link = Link(long_link=user_link)
             link.save()
@@ -32,9 +40,10 @@ def create(request):
 
             return HttpResponse(template.render(context, request))
 
-        return render(request, template, context)
+        return HttpResponse(template.render(context, request))
 
 
+# view for redirect on origin url form encoded
 def redirect(request, short_link):
     redirect_link = get_object_or_404(Link, short_link=short_link)
     redirect_link.followed_count += 1
@@ -43,6 +52,7 @@ def redirect(request, short_link):
     return HttpResponseRedirect(redirect_link.long_link)
 
 
+# view for get links list
 def all_links(request):
     links = Link.objects.order_by("-followed_count")
     template = loader.get_template('links/allLinks.html')
@@ -51,6 +61,7 @@ def all_links(request):
     return HttpResponse(content=content)
 
 
+# view for remove link
 def remove(request, link_id):
     removed_link = Link.objects.get(pk=link_id)
     removed_link.delete()
