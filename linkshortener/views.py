@@ -25,12 +25,8 @@ def create(request):
 
         used_form = LinkShorterForm(request.POST)
 
-        print(request.POST)
-
         if used_form.is_valid():
             user_link = request.POST['long_link']
-
-            print(user_link)
 
             link = Link(long_link=user_link)
             link.save()
@@ -63,7 +59,7 @@ def all_links(request):
 
 # view for remove link
 def remove(request, link_id):
-    removed_link = Link.objects.get(pk=link_id)
+    removed_link = get_object_or_404(Link, pk=link_id)
     removed_link.delete()
 
     return HttpResponseRedirect(reverse('allLinks'))
